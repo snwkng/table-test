@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=c2SK1IlmYL8
 
 Web:
 https://vuex.vuejs.org/ru/guide/
+
 https://ru.vuejs.org/v2/guide/
 
 Задание:
