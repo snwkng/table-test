@@ -35,7 +35,7 @@
             <th>approved</th>
           </tr>
           <tbody>
-            <tr v-for="row in paginatedUsers" :key="row.id">
+            <tr v-for="row in users_data" :key="row.id">
               <th>{{row.id}}</th>
               <th>{{row.createdAt}}</th>
               <th>{{row.email}}</th>
@@ -86,6 +86,7 @@ export default {
   methods: {
     pageClick(page) {
       this.pageNumber = page;
+      this.$emit('sendPage', this.pageNumber)
     },
     defaultPage() {
       this.pageNumber = 1;
@@ -111,13 +112,14 @@ export default {
   },
   computed: {
     paginationPages() {
-      return Math.ceil(this.users_data.length / this.usersPerPage);
+      // return Math.ceil(this.users_data.length / this.usersPerPage);
+      return Math.ceil(this.users_data.length);
     },
-    paginatedUsers() {
+    /* paginatedUsers() {
       let from = (this.pageNumber - 1) * this.usersPerPage;
       let to = from + Number(this.usersPerPage);
       return this.users_data.slice(from, to);
-    },
+    }, */
   },
 };
 </script>

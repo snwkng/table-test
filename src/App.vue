@@ -2,6 +2,7 @@
   <div id="app">
     <v-table
       :users_data="USERS"
+      @sendPage="sendPage"
     />
   </div>
 </template>
@@ -17,12 +18,18 @@ export default {
   },
   data: () => {
     return {
+      pageNumber: 1
     }
   },
   methods: {
     ...mapActions([
-      'GET_USERS_FROM_API'
+      'GET_USERS_FROM_API', 'GET_USERS_PAGE'
     ]),
+    sendPage(value) {
+      console.log("PageClick: " + value)
+      this.pageNumber = value
+      this.GET_USERS_PAGE(this.pageNumber)
+    }
   },
   computed: {
     ...mapGetters([
@@ -31,6 +38,7 @@ export default {
   },
   async mounted() {
     this.GET_USERS_FROM_API();
+    //this.GET_USERS_PAGE(this.pageNumber);
   }
 }
 </script>
