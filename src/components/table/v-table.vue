@@ -5,7 +5,7 @@
         <div class="v-table--show-and-search">
           <div class="v-table--show-and-search__select">
             Show
-            <select class="form-control" v-model="usersPerPage" @change="defaultPage()">
+            <select class="form-control" v-model="usersPage" @change="usersPerPage()">
               <option value="10" selected>10</option>
               <option>25</option>
               <option>50</option>
@@ -79,7 +79,7 @@ export default {
   },
   data() {
     return {
-      usersPerPage: 10,
+      usersPage: 10,
       pageNumber: 1,
     };
   },
@@ -87,6 +87,9 @@ export default {
     pageClick(page) {
       this.pageNumber = page;
       this.$emit('sendPage', this.pageNumber)
+    },
+    usersPerPage() {
+      this.$emit('usersPerPage', this.usersPage)
     },
     defaultPage() {
       this.pageNumber = 1;
@@ -112,8 +115,8 @@ export default {
   },
   computed: {
     paginationPages() {
-      // return Math.ceil(this.users_data.length / this.usersPerPage);
-      return Math.ceil(this.users_data.length);
+      // return Math.ceil(this.users_data.length / this.usersPage);
+      return Math.ceil(this.users_data.length); // Что-то не так с пагинацией
     },
     /* paginatedUsers() {
       let from = (this.pageNumber - 1) * this.usersPerPage;

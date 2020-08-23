@@ -1,46 +1,56 @@
 <template>
   <div id="app">
-    <v-table
-      :users_data="USERS"
+    <v-table 
+      :users_data="USERS" 
       @sendPage="sendPage"
+      @usersPerPage="usersPerPage"
     />
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import vTable from './components/table/v-table'
+import { mapActions, mapGetters } from "vuex";
+import vTable from "./components/table/v-table";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    vTable
+    vTable,
   },
   data: () => {
     return {
-      pageNumber: 1
-    }
+      pageNumber: 1,
+      usersPage: 10
+    };
   },
   methods: {
-    ...mapActions([
-      'GET_USERS_FROM_API', 'GET_USERS_PAGE'
-    ]),
+    ...mapActions(["GET_USERS_FROM_API", "GET_USERS_PAGE"]),
     sendPage(value) {
       console.log("PageClick: " + value)
       this.pageNumber = value
-      this.GET_USERS_PAGE(this.pageNumber)
+      this.GET_USERS_PAGE({
+        pageNumber: this.pageNumber,
+        usersPage: this.usersPage
+      });
+    },
+    usersPerPage(value) {
+      console.log("usersPerPage: " + value)
+      this.usersPage = value
+      this.GET_USERS_PAGE({
+        pageNumber: this.pageNumber,
+        usersPage: this.usersPage
+      });
     }
   },
   computed: {
-    ...mapGetters([
-      'USERS'
-    ])
+    ...mapGetters(["USERS"]),
+
   },
   async mounted() {
     this.GET_USERS_FROM_API();
     //this.GET_USERS_PAGE(this.pageNumber);
-  }
-}
+  },
+};
 </script>
 
 <style>

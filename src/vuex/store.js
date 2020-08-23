@@ -17,25 +17,30 @@ const store = new Vuex.Store({
           commit('SET_USERS_TO_VUEX', response.data)
         })
     }*/
-    async GET_USERS_FROM_API({commit}) {
+    async GET_USERS_FROM_API({ commit }) {
       await Axios.get(
         'https://5f36a62dbbfd1e00160beb4b.mockapi.io/users?page=1&limit=10'
       ).then((res) => { commit('SET_USERS_TO_VUEX', res.data) })
     },
-     async GET_USERS_PAGE({commit}, payload) {
+    async GET_USERS_PAGE({ commit }, payload) {
       await Axios.get(
-        'https://5f36a62dbbfd1e00160beb4b.mockapi.io/users?page=' + payload + "&limit=10"
+        'https://5f36a62dbbfd1e00160beb4b.mockapi.io/users?page=' + payload.pageNumber + "&limit=" + payload.usersPage
       ).then((res) => { commit('SET_USERS_TO_VUEX', res.data) })
-    } 
+    },
 
   },
   mutations: {
     SET_USERS_TO_VUEX: (state, users) => {
       state.users = users
     },
-     SET_USERS_PAGE: (state, users) => {
+    SET_USERS_PAGE: (state, users) => {
       state.users = users
-    } 
+    },
+
+    // change approved (true / false)
+    CHANGE_APPROVED: (state, approved) => {
+      state.users.approved = approved
+    },
   },
   getters: {
     USERS(state) {
