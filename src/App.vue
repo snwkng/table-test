@@ -1,65 +1,39 @@
 <template>
-  <div id="app">
-    <v-table 
-      :users_data="USERS" 
-      @sendPage="sendPage"
-      @usersPerPage="usersPerPage"
-    />
-  </div>
+    <div id="app">
+        <v-table></v-table>
+    </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import vTable from "./components/table/v-table";
+import {mapActions} from "vuex";
+import vTable from "./components/pageTable/v-table";
 
 export default {
-  name: "App",
-  components: {
-    vTable,
-  },
-  data: () => {
-    return {
-      pageNumber: 1,
-      usersPage: 10
-    };
-  },
-  methods: {
-    ...mapActions(["GET_USERS_FROM_API", "GET_USERS_PAGE"]),
-    sendPage(value) {
-      console.log("PageClick: " + value)
-      this.pageNumber = value
-      this.GET_USERS_PAGE({
-        pageNumber: this.pageNumber,
-        usersPage: this.usersPage
-      });
+    name: "App",
+    components: {
+        vTable,
     },
-    usersPerPage(value) {
-      console.log("usersPerPage: " + value)
-      this.usersPage = value
-      this.GET_USERS_PAGE({
-        pageNumber: this.pageNumber,
-        usersPage: this.usersPage
-      });
-    }
-  },
-  computed: {
-    ...mapGetters(["USERS"]),
+    data: () => {
+        return {};
+    },
+    methods: {
+        ...mapActions(["GET_USERS_FROM_API"]),
 
-  },
-  async mounted() {
-    this.GET_USERS_FROM_API();
-    //this.GET_USERS_PAGE(this.pageNumber);
-  },
+    },
+    computed: {},
+    async created() {
+        await this.GET_USERS_FROM_API();
+    },
 };
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
 }
 </style>
